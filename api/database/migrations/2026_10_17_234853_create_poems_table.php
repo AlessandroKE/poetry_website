@@ -14,6 +14,16 @@ return new class extends Migration
         Schema::create('poems', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('excerpt')->nullable();
+            $table->longText('content');
+            $table->string('status')->default('draft');
+            $table->boolean('is_featured')->default(false);
+            $table->timestamp('published_at')->nullable();
         });
     }
 
